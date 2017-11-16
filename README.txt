@@ -12,8 +12,8 @@ __Encoding__ : UTF-8
 
 2.使用方法
 （1）运行scratch_line.py
-（2）在自己的项目中，敲代码
-    from reaper import IPReaper
+（2）在自己的项目中输入：
+    from reaper import IPReaper
     rp = IPReaper(proxy=None)
     rp.run_reaper()
     rp.test_ips()
