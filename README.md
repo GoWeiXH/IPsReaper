@@ -16,12 +16,12 @@ __Encoding__ : UTF-8</br>
 2. ### 使用方法
 （1）运行scratch_line.py  
 （2）在自己的项目中输入：  
-    '''
+    <code>
     from reaper import IPReaper  
     rp = IPReaper(proxy=None)  
     rp.run_reaper()  
     rp.test_ips()
-    '''
+    </code>
 
 3. ### 数据  
 最终爬取到的 IP，存储在 ips_ok.txt 文件中
