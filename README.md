@@ -18,10 +18,10 @@ __Encoding__ : UTF-8</br>
 （2）在自己的项目中输入：  
     <code>
     <pre>from reaper import IPReaper
-    <pre>rp = IPReaper(proxy=None)
-    <pre>rp.run_reaper()
-    <pre>rp.test_ips()
-    </code>
+    rp = IPReaper(proxy=None)
+    rp.run_reaper()
+    rp.test_ips()
+    </code></pre>
 
 3. ### 数据  
 最终爬取到的 IP，存储在 ips_ok.txt 文件中
