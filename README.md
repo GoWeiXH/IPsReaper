@@ -16,8 +16,8 @@ __Encoding__ : UTF-8</br>
 2. ### 使用方法
 （1）运行scratch_line.py  
 （2）在自己的项目中输入：  
-    <code>
-    <pre>from reaper import IPReaper
+    <pre><code>
+    from reaper import IPReaper
     rp = IPReaper(proxy=None)
     rp.run_reaper()
     rp.test_ips()
@@ -32,10 +32,10 @@ config.txt，其中可配置选项有：
     - proxy ：（布尔，默认 False) 决定是否使用代理。  
                 若使用代理，则在初始化时应传入参数 proxy。  
                 例：  
-                '''  
+                <pre><code>
                 proxy = "https://115.200.37.94:80"  
                 rp = IPReaper(proxy=proxy)  
-                '''
+                </code></pre>
 
     - dir_name ：（字符串，默认 ips_lib/）存放最终 IP 的相对路径。    
     - abs_dir ：（字符串，可配可不配）存放最终 IP 的绝对路径。配置后，则 dir_name 失效。 
