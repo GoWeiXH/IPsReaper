@@ -32,8 +32,8 @@
       <file leaf-file-name="reaper.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/reaper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="82">
-              <caret line="198" column="11" lean-forward="true" selection-start-line="198" selection-start-column="11" selection-end-line="198" selection-end-column="11" />
+            <state relative-caret-position="172">
+              <caret line="232" column="65" lean-forward="true" selection-start-line="232" selection-start-column="65" selection-end-line="232" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -351,7 +351,14 @@
       <option name="project" value="LOCAL" />
       <updated>1511067967220</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="优化测试IP的方法">
+      <created>1511069867330</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1511069867330</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -404,7 +411,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="修改了README.txt文件" />
     <MESSAGE value="1.修改了README.txt文件&#10;2.添加了获取缓存中存储的可用IP的方法，rp.load_ips（）" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.修改了README.txt文件&#10;2.添加了获取缓存中存储的可用IP的方法，rp.load_ips（）" />
+    <MESSAGE value="优化测试IP的方法" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化测试IP的方法" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -734,8 +742,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/reaper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="198" column="11" lean-forward="true" selection-start-line="198" selection-start-column="11" selection-end-line="198" selection-end-column="11" />
+        <state relative-caret-position="172">
+          <caret line="232" column="65" lean-forward="true" selection-start-line="232" selection-start-column="65" selection-end-line="232" selection-end-column="65" />
           <folding />
         </state>
       </provider>

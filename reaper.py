@@ -230,9 +230,9 @@ class IPReaper():
         manager = self.manager
         # 暂时支持以下三个网站，后续更新添加
         # key 为目标网站在IPReaper类中的方法名称，以供后续 eval()
-        base_ip_com ={"get_xici_ips":"http://www.xicidaili.com/",}
-                      # "get_66_ips": "http://www.66ip.cn/",
-                      # "get_kuai_ips":"http://www.kuaidaili.com/"}
+        base_ip_com ={"get_xici_ips":"http://www.xicidaili.com/",
+                      "get_66_ips": "http://www.66ip.cn/",
+                      "get_kuai_ips":"http://www.kuaidaili.com/"}
         # 存储 此时 可爬去的 IP 网站
         self.ok_com = []
         self._tool.print_format("Connection test")
