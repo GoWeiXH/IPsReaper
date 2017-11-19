@@ -197,11 +197,14 @@ class IPReaper():
         """
         测试爬取到的 IP 是否可用
         """
-        manager = self.manager
+        timeout = urllib3.Timeout(connect=3,read=6)
         for ip in self.ip_catch_lib:
             # 将暂时可用的IP保存至 ips_ok.txt
             file = open(self.config["abs_dir"]+"/ips_ok.txt", "at")
             try:
+
+                manager = urllib3.ProxyManager(ip,cert_reqs="CERT_REQUIRED", ca_certs=certifi.where(),
+                                               timeout=timeout,)
                 rep = manager.request("GET",self.config["test_domain"])
                 # 如果 response headers 的状态码为 200，则说明此 IP 可用
                 if rep.status == 200:
