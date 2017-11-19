@@ -38,6 +38,9 @@ class IPReaper():
         # IP缓存列表，通过get_**_ips()添加搜索到的IP，test_ips()读取此列表
         self.ip_catch_lib = []
 
+        # 存放最终可用 IP 的列表
+        self.ip_ok_lib = []
+
         # 设定超时时间
         timeout = urllib3.Timeout(connect=self.config["connect_timeout"],
                                   read=self.config["read_timeout"])
@@ -106,6 +109,12 @@ class IPReaper():
         self._tool.print_dict(config)
         return config
 
+    def load_ips(self):
+        """
+        从缓存列表中获取爬到的代理IP
+        :return: 存放代理IP的列表
+        """
+        return self.ip_ok_lib
 
     def get_html(self,url,encoding="utf8"):
         """
@@ -196,6 +205,7 @@ class IPReaper():
                 rep = manager.request("GET",self.config["test_domain"])
                 # 如果 response headers 的状态码为 200，则说明此 IP 可用
                 if rep.status == 200:
+                    self.ip_ok_lib.append(ip)
                     file.write(ip+"\n")
                     print("Test success and saved ip: {0}".format(ip))
             # retry 次数过多则抛出此异常
@@ -217,9 +227,9 @@ class IPReaper():
         manager = self.manager
         # 暂时支持以下三个网站，后续更新添加
         # key 为目标网站在IPReaper类中的方法名称，以供后续 eval()
-        base_ip_com ={"get_xici_ips":"http://www.xicidaili.com/",
-                      "get_66_ips": "http://www.66ip.cn/",
-                      "get_kuai_ips":"http://www.kuaidaili.com/"}
+        base_ip_com ={"get_xici_ips":"http://www.xicidaili.com/",}
+                      # "get_66_ips": "http://www.66ip.cn/",
+                      # "get_kuai_ips":"http://www.kuaidaili.com/"}
         # 存储 此时 可爬去的 IP 网站
         self.ok_com = []
         self._tool.print_format("Connection test")
@@ -256,6 +266,3 @@ class IPReaper():
         # 将所有协程 join 并 运行
         gevent.joinall(func_list)
 
-rp = IPReaper(None)
-rp.run_reaper()
-rp.test_ips()

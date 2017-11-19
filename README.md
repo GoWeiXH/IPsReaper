@@ -13,7 +13,6 @@ __Encoding__ : UTF-8</br>
     * 目前支持爬取代理网站：西刺、66、快代理。
 
 2. ### 使用方法
-    * 运行scratch_line.py  
     * 在自己的项目中输入：  
     <pre><code>
     from reaper import IPReaper
@@ -23,7 +22,11 @@ __Encoding__ : UTF-8</br>
     </code></pre>
 
 3. ### 数据
-    * 最终爬取到的 IP，存储在 ips_ok.txt 文件中。
+    * 最终爬取到的 IP，存储在 ips_ok.txt 文件中。若使用，可以读取该文件。
+    * 若要使用爬取到的IP，可在程序中使用
+                <pre><code>
+                rp.load_ips()
+                </code></pre>
 
 4. ### 配置文件  **config.txt，可配置选项**
 
