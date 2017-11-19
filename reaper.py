@@ -146,7 +146,7 @@ class IPReaper():
                 for t in trs:
                     tds = t.select("td")
                     ip_path = tds[protocol].text.lower() + "://" + tds[addr].text + ":" + tds[port].text
-                    print("xici.com : get ip {0}".format(ip_path))
+                    print("xici.com : Get ip {0}".format(ip_path))
                     self.ip_catch_lib.append(ip_path)
                 time.sleep(self.config["frequency"])
 
@@ -158,7 +158,6 @@ class IPReaper():
         base_url = ["http://www.66ip.cn/nmtq.php?proxytype=0", #http
                     "http://www.66ip.cn/nmtq.php?proxytype=1"] #https
 
-        # 每次随机选取一个 url，一共进行 4 次
         for n in range(10):
             url = random.choice(base_url)
             html = self.get_html(url,"gbk")
@@ -220,7 +219,8 @@ class IPReaper():
                 print("Problems :{0}".format(e))
             finally:
                 file.close()
-        self._tool.print_format("Test finished")
+
+        self._tool.print_format("Test finished {0}".format(os.getpid()))
         self._tool.count_ip(self.config["abs_dir"])
 
 
