@@ -159,7 +159,7 @@ class IPReaper():
                     "http://www.66ip.cn/nmtq.php?proxytype=1"] #https
 
         # 每次随机选取一个 url，一共进行 4 次
-        for n in range(4):
+        for n in range(10):
             url = random.choice(base_url)
             html = self.get_html(url,"gbk")
             tag = list(islice(html,10,49))[0::2]
@@ -183,8 +183,8 @@ class IPReaper():
                     "http://www.kuaidaili.com/free/intr/2/"]
         # 命名索引 协议，地址，端口号
         protocol, addr, port = 3, 0, 1
-        for url in base_url:
-            html = self.get_html(url)
+        for i in range(10):
+            html = self.get_html(random.choice(base_url))
             trs = html.select("#list tr")[1::]
             for tr in trs:
                 tds = tr.select("td")
