@@ -194,12 +194,12 @@ class IPReaper():
             time.sleep(self.config["frequency"])
 
 
-    def test_ips(self):
+    def test_ips(self,ips_list):
         """
         测试爬取到的 IP 是否可用
         """
         timeout = urllib3.Timeout(connect=3,read=6)
-        for ip in self.ip_catch_lib:
+        for ip in ips_list:
             # 将暂时可用的IP保存至 ips_ok.txt
             file = open(self.config["abs_dir"]+"/ips_ok.txt", "at")
             try:
@@ -222,6 +222,24 @@ class IPReaper():
                 file.close()
         self._tool.print_format("Test finished")
         self._tool.count_ip(self.config["abs_dir"])
+
+
+    def test_ips_multi_thread(self):
+        """
+        将缓存中的IP分成三份，起用三个协程同时测试
+        """
+        thread_list = []
+
+        ips_list = []
+        index = int(len(self.ip_catch_lib) / 3)
+        ips_list.append(self.ip_catch_lib[0:index])
+        ips_list.append(self.ip_catch_lib[index:index*2])
+        ips_list.append(self.ip_catch_lib[index*2::])
+
+        for list in ips_list:
+            thread_list.append(gevent.spawn(self.test_ips,list))
+
+        gevent.joinall(thread_list)
 
 
     def connect_test(self):

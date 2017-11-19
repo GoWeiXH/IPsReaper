@@ -7,4 +7,4 @@ if __name__ == '__main__':
     # rp = IPReaper(proxy=proxy)
     rp = IPReaper(proxy=None)
     rp.run_reaper()
-    rp.test_ips()
+    rp.test_ips_multi_thread()
