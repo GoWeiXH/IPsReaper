@@ -12,7 +12,6 @@ class Tools():
         """
         for key,value in dict_data.items():
             print("{0}: {1}".format(key,value))
-        self.print_format("Loading success")
 
     def print_format(self,str_data):
         """
