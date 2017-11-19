@@ -8,4 +8,3 @@ if __name__ == '__main__':
     rp = IPReaper(proxy=None)
     rp.run_reaper()
     rp.test_ips()
-    print(rp.load_ips())

@@ -78,7 +78,7 @@ class IPReaper():
         # 读取配置文件中的参数的类型是字符串，但以下参数值得类型不应该是字符串
         # 所以构建此列表，以供后续处理其中对应的值
         need_eval = ["proxy","connect_timeout","read_timeout","frequency"]
-        config_file = os.path.abspath("IPsReaper_lib/config.txt")
+        config_file = os.path.abspath("config.txt")
         with open(config_file,"rt") as config_file:
             for item in config_file:
                 item = self._tool.strip(item)
