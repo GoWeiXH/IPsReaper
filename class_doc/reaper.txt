@@ -1,0 +1,75 @@
+Help on module reaper:
+
+NAME
+    reaper - # -*- coding: utf-8 -*-
+
+CLASSES
+    builtins.object
+        IPReaper
+    
+    class IPReaper(builtins.object)
+     |  IPReaper类，是主体核心类
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, proxy=None)
+     |      初始化IPReaper
+     |      
+     |      :param proxy: 要使用的代理ip，格式为：
+     |          协议://IP地址:端口号
+     |          举例： https://192.168.0.1:88
+     |  
+     |  connect_test(self)
+     |      测试要爬取的目标网站 此时 是否可用
+     |  
+     |  generate_ips(self)
+     |      从文件中读取 ip ，以生成器的方式返回可用 ip
+     |  
+     |  get_66_ips(self)
+     |      获取 66网站 的 IP
+     |  
+     |  get_html(self, url, encoding='utf8')
+     |      :param url: 要访问的 url
+     |      :param encoding: 默认字符集编码为 UTF-8
+     |      :return: 返回请求的页面
+     |  
+     |  get_ips_from_cache(self)
+     |      从缓存集合中获取爬到的代理IP，转换成列表
+     |      :return: 存放代理IP的列表
+     |  
+     |  get_ips_from_file(self)
+     |      从 ips_ok.txt 中读取可用 ip
+     |      :return: 存储可用 ip 的列表
+     |  
+     |  get_kuai_ips(self)
+     |      获取 快代理网站 的 IP
+     |  
+     |  get_xici_ips(self)
+     |      获取 西刺网站 的 IP
+     |  
+     |  load_config(self)
+     |      读取加载文件：同级目录下的 config.txt
+     |      并赋值给类属性 config，以供其他方法共享、调用
+     |  
+     |  run_reaper(self)
+     |      运行 reaper 爬虫
+     |  
+     |  test_ips(self, ips_list)
+     |      测试爬取到的 IP 是否可用
+     |  
+     |  test_ips_multi_thread(self)
+     |      将缓存中的IP分成三份，起用三个协程同时测试
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+FILE
+    h:\pythonworkspace\ipsreaper\reaper.py
+
+
