@@ -16,8 +16,6 @@ class IPReaper():
     IPReaper类，是主体核心类
     """
 
-    #todo email
-
     def __init__(self,proxy=None):
         """
         初始化IPReaper

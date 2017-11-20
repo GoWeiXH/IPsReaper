@@ -6,7 +6,6 @@ NAME
 CLASSES
     builtins.Exception(builtins.BaseException)
         AnalysisError
-        ConnectTimeoutError
         LackDataError
     
     class AnalysisError(builtins.Exception)

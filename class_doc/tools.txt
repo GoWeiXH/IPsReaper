@@ -14,7 +14,7 @@ CLASSES
      |  
      |  count_ip(self, abs_path)
      |      统计此次任务最终保存的ip数量，并打印
-     |      :param path: 存储 ips_ok.txt 的绝对路径
+     |      :param abs_path: 存储 ips_ok.txt 的绝对路径
      |  
      |  print_dict(self, dict_data)
      |      将传入的字典对象进行格式化打印

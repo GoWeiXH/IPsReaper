@@ -1,4 +1,4 @@
 proxy = False
 connect_timeout = 3
-read_timeout = 5
+read_timeout = 6
 frequency = 6
