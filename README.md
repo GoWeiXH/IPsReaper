@@ -27,10 +27,8 @@ __Encoding__ : UTF-8</br>
                 <pre><code>
                 # 1.从缓存中获取
                 rp.get_ips_from_cache()
-                
                 # 2.从文件中获取
                 rp.get_ips_from_file()
-                
                 # 3.从文件中读取，以生成器的方式返回
                 rp.generate_ips()
                 </code></pre>
