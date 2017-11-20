@@ -33,7 +33,7 @@ class Tools():
     def count_ip(self,abs_path):
         """
         统计此次任务最终保存的ip数量，并打印
-        :param path: 存储 ips_ok.txt 的绝对路径
+        :param abs_path: 存储 ips_ok.txt 的绝对路径
         """
         ok_txt = len(open(abs_path+"\\"+"ips_ok.txt","rt").readlines())
         print("The number of available ip is {0}".format(ok_txt))

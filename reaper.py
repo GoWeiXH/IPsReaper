@@ -98,15 +98,40 @@ class IPReaper():
         config.setdefault("parser", "html.parser")
         config.setdefault("connect_timeout", 3)
         config.setdefault("read_timeout", 6)
-
-        # frequency 指的是 每 {n} 秒请求一次 ip网站
-        #
         config.setdefault("frequency", 6)
-
-        # 用来测试 IP 是否可用的网站，可以设置成你自己以后要爬去的目标网站
         config.setdefault("test_domain", "https://book.douban.com/")
         self._tool.print_dict(config)
         return config
+
+    def connect_test(self):
+        """
+        测试要爬取的目标网站 此时 是否可用
+        """
+        manager = self.manager
+        # 暂时支持以下三个网站，后续更新添加
+        # key 为目标网站在IPReaper类中的方法名称，以供后续 eval()
+        base_ip_com ={"get_xici_ips":"http://www.xicidaili.com/",
+                      "get_66_ips": "http://www.66ip.cn/",
+                      "get_kuai_ips":"http://www.kuaidaili.com/"}
+        # 存储 此时 可爬去的 IP 网站
+        self.ok_com = []
+        self._tool.print_format("Connection test")
+        for name,url in base_ip_com.items():
+            # 对同一网站重复 3 次请求（实际上 urllib3 中的 request 已经有 retry 次数）
+            # 以后会对此问题进行优化
+            for n in range(3):
+                print("{0}th url:{1}".format(n+1,url))
+                try:
+                    rep = manager.request("GET",url)
+                    if rep.status == 200:
+                        # 状态码为 200，则测试成功，此网站可用
+                        self.ok_com.append((name,url))
+                        print("success")
+                        break
+                except urllib3.exceptions.MaxRetryError:
+                    print("fail")
+        self._tool.print_format("Test finished")
+
 
     def generate_ips(self):
         """
@@ -148,6 +173,7 @@ class IPReaper():
         response = self.manager.request("GET", url)
         html = BeautifulSoup(response.data.decode(encoding), self.config["parser"])
         return html
+
 
     def get_xici_ips(self):
         """
@@ -259,37 +285,6 @@ class IPReaper():
         for list in ips_list:
             thread_list.append(gevent.spawn(self.test_ips,list))
         gevent.joinall(thread_list)
-
-
-    def connect_test(self):
-        """
-        测试要爬取的目标网站 此时 是否可用
-        """
-        manager = self.manager
-        # 暂时支持以下三个网站，后续更新添加
-        # key 为目标网站在IPReaper类中的方法名称，以供后续 eval()
-        base_ip_com ={"get_xici_ips":"http://www.xicidaili.com/",
-                      "get_66_ips": "http://www.66ip.cn/",
-                      "get_kuai_ips":"http://www.kuaidaili.com/"}
-        # 存储 此时 可爬去的 IP 网站
-        self.ok_com = []
-        self._tool.print_format("Connection test")
-        for name,url in base_ip_com.items():
-            # 对同一网站重复 3 次请求（实际上 urllib3 中的 request 已经有 retry 次数）
-            # 以后会对此问题进行优化
-            for n in range(3):
-                print("{0}th url:{1}".format(n+1,url))
-                try:
-                    rep = manager.request("GET",url)
-                    if rep.status == 200:
-                        # 状态码为 200，则测试成功，此网站可用
-                        self.ok_com.append((name,url))
-                        print("success")
-                        break
-                except urllib3.exceptions.MaxRetryError:
-                    print("fail")
-        self._tool.print_format("Test finished")
-
 
     def run_reaper(self):
         """

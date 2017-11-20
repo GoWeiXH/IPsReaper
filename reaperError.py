@@ -27,16 +27,3 @@ class LackDataError(Exception):
 
     def __str__(self):
         return "Lack {0} data".format(self.value)
-
-
-class ConnectTimeoutError(Exception):
-    def __init__(self,value):
-        """
-        当发起request，连接超时时抛出此异常
-
-        :param value: 连接的 url
-        """
-        self.value = value
-
-    def __str__(self):
-        return "Connect {0} timeout".format(self.value)
