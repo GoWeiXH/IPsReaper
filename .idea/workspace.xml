@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f33724d2-fa2d-4b5b-b23a-6f331f1d080d" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="f33724d2-fa2d-4b5b-b23a-6f331f1d080d" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,6 +48,7 @@
         <option value="$PROJECT_DIR$/tools.py" />
         <option value="$PROJECT_DIR$/class_doc/reaperError.txt" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/config.txt" />
       </list>
     </option>
   </component>
@@ -618,11 +617,18 @@
       <option name="project" value="LOCAL" />
       <updated>1511192752806</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Version 1.5.5">
+      <created>1511192944658</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1511192944658</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="23" width="1382" height="753" extended-state="6" />
+    <frame x="-8" y="23" width="1382" height="753" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14795144" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -670,7 +676,8 @@
     <MESSAGE value="添加了类文件的doc文档" />
     <MESSAGE value="更新了README.txt文档" />
     <MESSAGE value="Version 1.5.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version 1.5.0" />
+    <MESSAGE value="Version 1.5.5" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version 1.5.5" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -882,13 +889,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.txt" />
     <entry file="file://$PROJECT_DIR$/README.txt" />
-    <entry file="file://$PROJECT_DIR$/config.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ips_lib/ips_ok.txt" />
     <entry file="file://F:/Anaconda/envs/spider/Lib/multiprocessing/process.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -963,6 +963,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="83" column="4" lean-forward="false" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="2" column="16" lean-forward="false" selection-start-line="2" selection-start-column="16" selection-end-line="2" selection-end-column="16" />
           <folding />
         </state>
       </provider>
