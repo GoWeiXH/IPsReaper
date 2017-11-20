@@ -34,7 +34,6 @@ __Encoding__ : UTF-8</br>
                 
                 # 3.从文件中读取，以生成器的方式返回
                 rp.generate_ips()
-                
                 </code></pre>
 4. ### 配置文件  **config.txt，可配置选项**
 
