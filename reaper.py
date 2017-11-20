@@ -16,10 +16,7 @@ class IPReaper():
     IPReaper类，是主体核心类
     """
 
-    #todo load ips
-    #todo deduplication
     #todo email
-
 
     def __init__(self,proxy=None):
         """
@@ -35,8 +32,9 @@ class IPReaper():
         # 加载读取配置文件
         self.config = self.load_config()
 
-        # IP缓存列表，通过get_**_ips()添加搜索到的IP，test_ips()读取此列表
-        self.ip_catch_lib = []
+        # 缓存IP的集合，用以去重
+        # 通过get_**_ips()向集合中添加搜索到的IP，test_ips()读取此集合
+        self._ip_cache_lib = set()
 
         # 存放最终可用 IP 的列表
         self.ip_ok_lib = []
@@ -110,12 +108,36 @@ class IPReaper():
         self._tool.print_dict(config)
         return config
 
-    def load_ips(self):
+    def generate_ips(self):
         """
-        从缓存列表中获取爬到的代理IP
+        从文件中读取 ip ，以生成器的方式返回可用 ip
+        """
+        path = self.config["abs_dir"] + "/ips_ok.txt"
+        with open(path, "rt") as ips_file:
+            for ip in ips_file:
+                yield self._tool.strip(ip)
+
+
+    def get_ips_from_file(self):
+        """
+        从 ips_ok.txt 中读取可用 ip
+        :return: 存储可用 ip 的列表
+        """
+        path = self.config["abs_dir"] + "/ips_ok.txt"
+        ips_ok = []
+        with open(path,"rt") as ips_file:
+            for ip in ips_file:
+                ip = self._tool.strip(ip)
+                ips_ok.append(ip)
+        return ips_ok
+
+
+    def get_ips_from_cache(self):
+        """
+        从缓存集合中获取爬到的代理IP，转换成列表
         :return: 存放代理IP的列表
         """
-        return self.ip_ok_lib
+        return list(self._ip_cache_lib)
 
     def get_html(self,url,encoding="utf8"):
         """
@@ -147,7 +169,7 @@ class IPReaper():
                     tds = t.select("td")
                     ip_path = tds[protocol].text.lower() + "://" + tds[addr].text + ":" + tds[port].text
                     print("xici.com : Get ip {0}".format(ip_path))
-                    self.ip_catch_lib.append(ip_path)
+                    self._ip_cache_lib.add(ip_path)
                 time.sleep(self.config["frequency"])
 
 
@@ -166,8 +188,8 @@ class IPReaper():
             for t in tag:
                 if t is None: continue
                 ip_path = pre + self._tool.strip(t)
-                print("66ip.com : Get ip {0}".format(ip_path))
-                self.ip_catch_lib.append(ip_path)
+                print("66ip.cn : Get ip {0}".format(ip_path))
+                self._ip_cache_lib.add(ip_path)
             time.sleep(self.config["frequency"])
 
 
@@ -189,7 +211,7 @@ class IPReaper():
                 tds = tr.select("td")
                 ip_path = tds[protocol].text.lower()+"://"+tds[addr].text+":"+tds[port].text
                 print("kuai.com : Get ip {0}".format(ip_path))
-                self.ip_catch_lib.append(ip_path)
+                self._ip_cache_lib.add(ip_path)
             time.sleep(self.config["frequency"])
 
 
@@ -202,7 +224,6 @@ class IPReaper():
             # 将暂时可用的IP保存至 ips_ok.txt
             file = open(self.config["abs_dir"]+"/ips_ok.txt", "at")
             try:
-
                 manager = urllib3.ProxyManager(ip,cert_reqs="CERT_REQUIRED", ca_certs=certifi.where(),
                                                timeout=timeout,)
                 rep = manager.request("GET",self.config["test_domain"])
@@ -220,7 +241,7 @@ class IPReaper():
             finally:
                 file.close()
 
-        self._tool.print_format("Test finished {0}".format(os.getpid()))
+        self._tool.print_format("Test finished {0}")
         self._tool.count_ip(self.config["abs_dir"])
 
 
@@ -229,16 +250,14 @@ class IPReaper():
         将缓存中的IP分成三份，起用三个协程同时测试
         """
         thread_list = []
-
+        ip_cache_lib = self.get_ips_from_cache()
         ips_list = []
-        index = int(len(self.ip_catch_lib) / 3)
-        ips_list.append(self.ip_catch_lib[0:index])
-        ips_list.append(self.ip_catch_lib[index:index*2])
-        ips_list.append(self.ip_catch_lib[index*2::])
-
+        index = int(len(ip_cache_lib) / 3)
+        ips_list.append(ip_cache_lib[0:index])
+        ips_list.append(ip_cache_lib[index:index*2])
+        ips_list.append(ip_cache_lib[index*2::])
         for list in ips_list:
             thread_list.append(gevent.spawn(self.test_ips,list))
-
         gevent.joinall(thread_list)
 
 
