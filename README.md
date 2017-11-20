@@ -25,7 +25,6 @@ __Encoding__ : UTF-8</br>
     * 最终爬取到的 IP，存储在 ips_ok.txt 文件中。若使用，可以读取该文件。
     * 若要使用爬取到的IP，可在程序中使用
                 <pre><code>
-                
                 # 1.从缓存中获取
                 rp.get_ips_from_cache()
                 
