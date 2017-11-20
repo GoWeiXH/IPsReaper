@@ -36,7 +36,6 @@ __Encoding__ : UTF-8</br>
                 rp.generate_ips()
                 
                 </code></pre>
-
 4. ### 配置文件  **config.txt，可配置选项**
 
     * proxy ：（布尔，默认 False) 决定是否使用代理。  
