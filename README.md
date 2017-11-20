@@ -26,11 +26,11 @@ __Encoding__ : UTF-8</br>
     * 若要使用爬取到的IP，可在程序中使用
                 <pre><code>
                 # 1.从缓存中获取
-                rp.get_ips_from_cache()
+                list = rp.get_ips_from_cache()
                 # 2.从文件中获取
-                rp.get_ips_from_file()
+                list = rp.get_ips_from_file()
                 # 3.从文件中读取，以生成器的方式返回
-                rp.generate_ips()
+                gen = rp.generate_ips()
                 </code></pre>
 4. ### 配置文件  **config.txt，可配置选项**
 
