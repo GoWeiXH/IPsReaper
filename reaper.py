@@ -2,21 +2,24 @@
 from gevent import monkey;monkey.patch_all()
 from bs4 import BeautifulSoup
 from itertools import islice
-import random,time,os
+import random
+import time
+import os
 import urllib3
 import certifi
 import gevent
 
-from reaperError import LackDataError,AnalysisError
+from reaperError import LackDataError, AnalysisError
 from tools import Tools
 
-class IPReaper():
+
+class IPReaper:
 
     """
     IPReaper类，是主体核心类
     """
 
-    def __init__(self,proxy=None):
+    def __init__(self, proxy=None):
         """
         初始化IPReaper
 
@@ -62,7 +65,6 @@ class IPReaper():
 
         # 调用测试连接的方法，决定要爬取的 IP 网站
         self.connect_test()
-
 
     def load_config(self):
         """
@@ -130,7 +132,6 @@ class IPReaper():
                     print("fail")
         self._tool.print_format("Test finished")
 
-
     def generate_ips(self):
         """
         从文件中读取 ip ，以生成器的方式返回可用 ip
@@ -139,7 +140,6 @@ class IPReaper():
         with open(path, "rt") as ips_file:
             for ip in ips_file:
                 yield self._tool.strip(ip)
-
 
     def get_ips_from_file(self):
         """
@@ -153,7 +153,6 @@ class IPReaper():
                 ip = self._tool.strip(ip)
                 ips_ok.append(ip)
         return ips_ok
-
 
     def get_ips_from_cache(self):
         """
@@ -171,7 +170,6 @@ class IPReaper():
         response = self.manager.request("GET", url)
         html = BeautifulSoup(response.data.decode(encoding), self.config["parser"])
         return html
-
 
     def get_xici_ips(self):
         """
@@ -196,7 +194,6 @@ class IPReaper():
                     self._ip_cache_lib.add(ip_path)
                 time.sleep(self.config["frequency"])
 
-
     def get_66_ips(self):
         """
          获取 66网站 的 IP
@@ -215,7 +212,6 @@ class IPReaper():
                 print("66ip.cn : Get ip {0}".format(ip_path))
                 self._ip_cache_lib.add(ip_path)
             time.sleep(self.config["frequency"])
-
 
     def get_kuai_ips(self):
         """
@@ -237,7 +233,6 @@ class IPReaper():
                 print("kuai.com : Get ip {0}".format(ip_path))
                 self._ip_cache_lib.add(ip_path)
             time.sleep(self.config["frequency"])
-
 
     def test_ips(self,ips_list):
         """
@@ -267,7 +262,6 @@ class IPReaper():
 
         self._tool.print_format("Test finished {0}")
         self._tool.count_ip(self.config["abs_dir"])
-
 
     def test_ips_multi_thread(self):
         """
