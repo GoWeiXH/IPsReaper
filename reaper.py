@@ -161,7 +161,7 @@ class IPReaper:
         """
         return list(self._ip_cache_lib)
 
-    def get_html(self,url,encoding="utf8"):
+    def get_html(self, url, encoding="utf8"):
         """
         :param url: 要访问的 url
         :param encoding: 默认字符集编码为 UTF-8
@@ -234,16 +234,16 @@ class IPReaper:
                 self._ip_cache_lib.add(ip_path)
             time.sleep(self.config["frequency"])
 
-    def test_ips(self,ips_list):
+    def test_ips(self, ips_list):
         """
         测试爬取到的 IP 是否可用
         """
-        timeout = urllib3.Timeout(connect=3,read=6)
+        timeout = urllib3.Timeout(connect=3, read=6)
         for ip in ips_list:
             # 将暂时可用的IP保存至 ips_ok.txt
             file = open(self.config["abs_dir"]+"/ips_ok.txt", "at")
             try:
-                manager = urllib3.ProxyManager(ip,cert_reqs="CERT_REQUIRED", ca_certs=certifi.where(),
+                manager = urllib3.ProxyManager(ip, cert_reqs="CERT_REQUIRED", ca_certs=certifi.where(),
                                                timeout=timeout,)
                 rep = manager.request("GET",self.config["test_domain"])
                 # 如果 response headers 的状态码为 200，则说明此 IP 可用

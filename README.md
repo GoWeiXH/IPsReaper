@@ -18,7 +18,8 @@ __Encoding__ : UTF-8</br>
     from reaper import IPReaper
     rp = IPReaper(proxy=None)
     rp.run_reaper()
-    rp.test_ips()
+    ips_catch_lib = rp.get_ips_from_cache()
+    rp.test_ips(ips_catch_lib)
     </code></pre>
 
 3. ### 数据
