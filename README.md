@@ -2,7 +2,7 @@
 
 __Version__ ：1.5.8  
 __Author__ : Jacky Wei  
-__Last Update Time__ : 2017.11.20  
+__Last Update Time__ : 2018.04.03
 __Encoding__ : UTF-8</br>
 
 
@@ -21,6 +21,8 @@ __Encoding__ : UTF-8</br>
     ips_catch_lib = rp.get_ips_from_cache()
     rp.test_ips(ips_catch_lib)
     </code></pre>
+
+    * 运行 run.py
 
 3. ### 数据
     * 最终爬取到的 IP，存储在 ips_ok.txt 文件中。若使用，可以读取该文件。
