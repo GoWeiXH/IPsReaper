@@ -22,7 +22,7 @@ __Encoding__ : UTF-8</br>
     rp.test_ips(ips_catch_lib)
     </code></pre>
 
-    * 运行 run.py
+    * 或运行 run.py
 
 3. ### 数据
     * 最终爬取到的 IP，存储在 ips_ok.txt 文件中。若使用，可以读取该文件。
