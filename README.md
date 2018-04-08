@@ -1,8 +1,8 @@
 # IPsReaper
 
-* __Version__ ：1.6.0
+* __Version__ ：1.7.0
 * __Author__ : Jacky Wei  
-* __Last Update Time__ : 2018.04.03
+* __Last Update Time__ : 2018.04.08
 * __Encoding__ : UTF-8</br>
 
 
