@@ -3,6 +3,7 @@
 此文件包含了一些自定义异常类，方便提示错误
 """
 
+
 class AnalysisError(Exception):
     def __init__(self,value):
         """

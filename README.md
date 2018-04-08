@@ -13,6 +13,7 @@
     * 目前支持爬取代理网站：西刺、66、快代理。
 
 2. ### 使用方法
+    * 运行 run.py
     * 在自己的项目中输入：  
     <pre><code>
     from reaper import IPReaper
@@ -21,8 +22,6 @@
     ips_catch_lib = rp.get_ips_from_cache()
     rp.test_ips(ips_catch_lib)
     </code></pre>
-
-    * 或运行 run.py
 
 3. ### 数据
     * 最终爬取到的 IP，存储在 ips_ok.txt 文件中。若使用，可以读取该文件。

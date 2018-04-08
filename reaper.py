@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from gevent import monkey;monkey.patch_all()
 from bs4 import BeautifulSoup
 from itertools import islice
 import random
@@ -9,8 +8,8 @@ import urllib3
 import certifi
 import gevent
 
-from reaperError import LackDataError, AnalysisError
-from tools import Tools
+from reaperError import *
+from tools import Tools as toolBox
 
 
 class IPReaper:
@@ -27,9 +26,6 @@ class IPReaper:
             协议://IP地址:端口号
             举例： https://192.168.0.1:88
         """
-        # 创建工具类
-        self._tool = Tools()
-
         # 加载读取配置文件
         self.config = self.load_config()
 
@@ -39,6 +35,9 @@ class IPReaper:
 
         # 存放最终可用 IP 的列表
         self.ip_ok_lib = []
+
+        # 存放可用的代理网站
+        self.ok_com = []
 
         # 设定超时时间
         timeout = urllib3.Timeout(connect=self.config["connect_timeout"],
@@ -52,8 +51,8 @@ class IPReaper:
                                                timeout=timeout,)
         else:
             if proxy:
-                self.manager = urllib3.ProxyManager(proxy,cert_reqs="CERT_REQUIRED", ca_certs=certifi.where(),
-                                                timeout=timeout,)
+                self.manager = urllib3.ProxyManager(proxy, cert_reqs="CERT_REQUIRED", ca_certs=certifi.where(),
+                                                    timeout=timeout,)
             else:
                 # 若参数 proxy 值为 None ，则抛出缺少 proxy 的异常
                 msg = "proxy"
@@ -66,7 +65,8 @@ class IPReaper:
         # 调用测试连接的方法，决定要爬取的 IP 网站
         self.connect_test()
 
-    def load_config(self):
+    @staticmethod
+    def load_config():
         """
         读取加载文件：同级目录下的 config.txt
         并赋值给类属性 config，以供其他方法共享、调用
@@ -75,32 +75,32 @@ class IPReaper:
 
         # 读取配置文件中的参数的类型是字符串，但以下参数值得类型不应该是字符串
         # 所以构建此列表，以供后续处理其中对应的值
-        need_eval = ["proxy","connect_timeout","read_timeout","frequency"]
+        need_eval = ["proxy", "connect_timeout", "read_timeout", "frequency"]
         config_file = os.path.abspath("config.txt")
-        with open(config_file,"rt") as config_file:
+        with open(config_file, "rt") as config_file:
             for item in config_file:
-                item = self._tool.strip(item)
-                key,value = item.split("=")
+                item = toolBox.strip(item)
+                key, value = item.split("=")
                 if value == "":
                     msg = "'" + key + "'"
                     # 如果只获取到了 key 而没有获取到对应 value，则抛出解析错误异常
                     raise AnalysisError(msg)
                 # 将字符串值转换为相应类型
                 config[key] = eval(value) if key in need_eval else value
-        self._tool.print_format("Loading config")
+        toolBox.print_format("Loading config")
 
         # 设置各可配置项的默认值
-        config.setdefault("proxy",False)
+        config.setdefault("proxy", False)
         config.setdefault("dir_name", "ips_lib/")
         config.setdefault("abs_dir", os.path.abspath(config["dir_name"]))
 
-        #暂时只支持 html.parser，后续加入 lxml 等解析器
+        # 暂时只支持 html.parser，后续加入 lxml 等解析器
         config.setdefault("parser", "html.parser")
         config.setdefault("connect_timeout", 3)
         config.setdefault("read_timeout", 6)
         config.setdefault("frequency", 6)
         config.setdefault("test_domain", "https://book.douban.com/")
-        self._tool.print_dict(config)
+        toolBox.print_dict(config)
         return config
 
     def connect_test(self):
@@ -110,27 +110,27 @@ class IPReaper:
         manager = self.manager
         # 暂时支持以下三个网站，后续更新添加
         # key 为目标网站在IPReaper类中的方法名称，以供后续 eval()
-        base_ip_com ={"get_xici_ips":"http://www.xicidaili.com/",
-                      "get_66_ips": "http://www.66ip.cn/",
-                      "get_kuai_ips":"http://www.kuaidaili.com/"}
+        base_ip_com = {"get_xici_ips": "http://www.xicidaili.com/",
+                       "get_66_ips": "http://www.66ip.cn/",
+                       "get_kuai_ips": "http://www.kuaidaili.com/"}
         # 存储 此时 可爬去的 IP 网站
         self.ok_com = []
-        self._tool.print_format("Connection test")
-        for name,url in base_ip_com.items():
+        toolBox.print_format("Connection test")
+        for name, url in base_ip_com.items():
             # 对同一网站重复 3 次请求（实际上 urllib3 中的 request 已经有 retry 次数）
             # 以后会对此问题进行优化
             for n in range(3):
-                print("{0}th url:{1}".format(n+1,url))
+                print("{0}th url:{1}".format(n+1, url))
                 try:
-                    rep = manager.request("GET",url)
+                    rep = manager.request("GET", url)
                     if rep.status == 200:
                         # 状态码为 200，则测试成功，此网站可用
-                        self.ok_com.append((name,url))
+                        self.ok_com.append((name, url))
                         print("success")
                         break
                 except urllib3.exceptions.MaxRetryError:
                     print("fail")
-        self._tool.print_format("Test finished")
+        toolBox.print_format("Test finished")
 
     def generate_ips(self):
         """
@@ -139,7 +139,7 @@ class IPReaper:
         path = self.config["abs_dir"] + "/ips_ok.txt"
         with open(path, "rt") as ips_file:
             for ip in ips_file:
-                yield self._tool.strip(ip)
+                yield toolBox.strip(ip)
 
     def get_ips_from_file(self):
         """
@@ -148,9 +148,9 @@ class IPReaper:
         """
         path = self.config["abs_dir"] + "/ips_ok.txt"
         ips_ok = []
-        with open(path,"rt") as ips_file:
+        with open(path, "rt") as ips_file:
             for ip in ips_file:
-                ip = self._tool.strip(ip)
+                ip = toolBox.strip(ip)
                 ips_ok.append(ip)
         return ips_ok
 
@@ -175,12 +175,12 @@ class IPReaper:
         """
         获取 西刺网站 的 IP
         """
-        base_url = ["http://www.xicidaili.com/nn/", # 国内高匿代理
-                    "http://www.xicidaili.com/nt/", # 国内透明（普通）代理
-                    "http://www.xicidaili.com/wn/", # 国内 HTTPS 代理
-                    "http://www.xicidaili.com/wt/"] # 国内 HTTP 代理
+        base_url = ["http://www.xicidaili.com/nn/",  # 国内高匿代理
+                    "http://www.xicidaili.com/nt/",  # 国内透明（普通）代理
+                    "http://www.xicidaili.com/wn/",  # 国内 HTTPS 代理
+                    "http://www.xicidaili.com/wt/"]  # 国内 HTTP 代理
         # 命名索引 协议，地址，端口号
-        protocol,addr,port = 5,1,2
+        protocol, addr, port = 5, 1, 2
         for url in base_url:
             # 每个 url 访问 2 页，为了获取最近验证成功的IP，暂时写死，以后考虑可配置
             for n in range(0, 2):
@@ -190,7 +190,6 @@ class IPReaper:
                 for t in trs:
                     tds = t.select("td")
                     ip_path = tds[protocol].text.lower() + "://" + tds[addr].text + ":" + tds[port].text
-                    print("xici.com : Get ip {0}".format(ip_path))
                     self._ip_cache_lib.add(ip_path)
                 time.sleep(self.config["frequency"])
 
@@ -198,18 +197,18 @@ class IPReaper:
         """
          获取 66网站 的 IP
         """
-        base_url = ["http://www.66ip.cn/nmtq.php?proxytype=0", #http
-                    "http://www.66ip.cn/nmtq.php?proxytype=1"] #https
+        base_url = ["http://www.66ip.cn/nmtq.php?proxytype=0",  # http
+                    "http://www.66ip.cn/nmtq.php?proxytype=1"]  # https
 
         for n in range(10):
             url = random.choice(base_url)
-            html = self.get_html(url,"gbk")
-            tag = list(islice(html,10,49))[0::2]
+            html = self.get_html(url, "gbk")
+            tag = list(islice(html, 10, 49))[0::2]
             pre = "http://" if url.endswith("0") else "https://"
             for t in tag:
-                if t is None: continue
-                ip_path = pre + self._tool.strip(t)
-                print("66ip.cn : Get ip {0}".format(ip_path))
+                if t is None:
+                    continue
+                ip_path = pre + toolBox.strip(t)
                 self._ip_cache_lib.add(ip_path)
             time.sleep(self.config["frequency"])
 
@@ -230,7 +229,6 @@ class IPReaper:
             for tr in trs:
                 tds = tr.select("td")
                 ip_path = tds[protocol].text.lower()+"://"+tds[addr].text+":"+tds[port].text
-                print("kuai.com : Get ip {0}".format(ip_path))
                 self._ip_cache_lib.add(ip_path)
             time.sleep(self.config["frequency"])
 
@@ -245,7 +243,7 @@ class IPReaper:
             try:
                 manager = urllib3.ProxyManager(ip, cert_reqs="CERT_REQUIRED", ca_certs=certifi.where(),
                                                timeout=timeout,)
-                rep = manager.request("GET",self.config["test_domain"])
+                rep = manager.request("GET", self.config["test_domain"])
                 # 如果 response headers 的状态码为 200，则说明此 IP 可用
                 if rep.status == 200:
                     self.ip_ok_lib.append(ip)
@@ -260,8 +258,8 @@ class IPReaper:
             finally:
                 file.close()
 
-        self._tool.print_format("Test finished {0}")
-        self._tool.count_ip(self.config["abs_dir"])
+        toolBox.print_format("Test finished {0}")
+        toolBox.count_ip(self.config["abs_dir"])
 
     def test_ips_multi_thread(self):
         """
@@ -274,8 +272,8 @@ class IPReaper:
         ips_list.append(ip_cache_lib[0:index])
         ips_list.append(ip_cache_lib[index:index*2])
         ips_list.append(ip_cache_lib[index*2::])
-        for list in ips_list:
-            thread_list.append(gevent.spawn(self.test_ips,list))
+        for item in ips_list:
+            thread_list.append(gevent.spawn(self.test_ips, item))
         gevent.joinall(thread_list)
 
     def run_reaper(self):
@@ -284,13 +282,16 @@ class IPReaper:
         """
         # 存储添加了可爬取网站对应方法的协程
         func_list = []
-        for (func_name,domain_url) in self.ok_com:
+        for (func_name, domain_url) in self.ok_com:
             # 通过 eval() 将字符串的方法名 转换为 方法对象
             func = eval("self."+func_name)
             # 使用协程
             func_list.append(gevent.spawn(func))
-            print("function {0} is ready: {1}".format(func_name,domain_url))
-        self._tool.print_format("IPReaper running")
+            print("function {0} is ready: {1}".format(func_name, domain_url))
+        toolBox.print_format("IPReaper running")
+        print("IPReaper is getting proxy IPs......")
+        print("......")
+        print("...")
+        print(".")
         # 将所有协程 join 并 运行
         gevent.joinall(func_list)
-
