@@ -5,7 +5,7 @@
 
 
 class AnalysisError(Exception):
-    def __init__(self,value):
+    def __init__(self, value):
         """
         当解析配置文件出错时，抛出此异常
 
@@ -18,7 +18,7 @@ class AnalysisError(Exception):
 
 
 class LackDataError(Exception):
-    def __init__(self,value):
+    def __init__(self, value):
         """
         当缺少某个数据时，抛出此异常
 
