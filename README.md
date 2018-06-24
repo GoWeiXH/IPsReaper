@@ -2,7 +2,7 @@
 
 * __Version__ ：1.7.2
 * __Author__ : Jacky Wei  
-* __Last Update Time__ : 2018.04.016
+* __Last Update Time__ : 2018.06.24
 * __Encoding__ : UTF-8
 
 
@@ -16,9 +16,13 @@
     * 运行 run.py
     * 在自己的项目中输入：  
     <pre><code>
+    
+    # 以上已将爬取到的 IP 保存
     from reaper import IPReaper
     rp = IPReaper(proxy=None)
     rp.run_reaper()
+    
+    # 以下将爬取到的 IP 进行测试，保存测试成功的 IP
     ips_catch_lib = rp.get_ips_from_cache()
     rp.test_ips(ips_catch_lib)
     </code></pre>
@@ -27,10 +31,13 @@
     * 最终爬取到的 IP，存储在 ips_ok.txt 文件中。若使用，可以读取该文件。
     * 若要使用爬取到的IP，可在程序中使用
     <pre><code>
+    
     # 1.从缓存中获取
     list = rp.get_ips_from_cache()
+    
     # 2.从文件中获取
     list = rp.get_ips_from_file()
+    
     # 3.从文件中读取，以生成器的方式返回
     gen = rp.generate_ips()
     </code></pre>
