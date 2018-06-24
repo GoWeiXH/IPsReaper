@@ -17,7 +17,7 @@
     * 在自己的项目中输入：  
     <pre><code>
     
-    # 以上已将爬取到的 IP 保存
+    # 将爬取到的 IP 保存
     from reaper import IPReaper
     rp = IPReaper(proxy=None)
     rp.run_reaper()
