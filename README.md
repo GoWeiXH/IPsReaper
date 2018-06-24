@@ -22,7 +22,7 @@
     rp = IPReaper(proxy=None)
     rp.run_reaper()
     
-    # 以下将爬取到的 IP 进行测试，保存测试成功的 IP
+    # 将爬取到的 IP 进行测试，保存测试成功的 IP
     ips_catch_lib = rp.get_ips_from_cache()
     rp.test_ips(ips_catch_lib)
     </code></pre>
