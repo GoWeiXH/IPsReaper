@@ -290,8 +290,5 @@ class IPReaper:
             print("function {0} is ready: {1}".format(func_name, domain_url))
         toolBox.print_format("IPReaper running")
         print("IPReaper is getting proxy IPs......")
-        print("......")
-        print("...")
-        print(".")
         # 将所有协程 join 并 运行
         gevent.joinall(func_list)
