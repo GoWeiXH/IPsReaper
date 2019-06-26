@@ -99,7 +99,7 @@ class IPReaper:
         config.setdefault("connect_timeout", 3)
         config.setdefault("read_timeout", 6)
         config.setdefault("frequency", 6)
-        config.setdefault("test_domain", "https://book.douban.com/")
+        config.setdefault("test_domain", "https://mp.csdn.net/")
         toolBox.print_dict(config)
         return config
 

@@ -1,4 +1,5 @@
 proxy = False
-connect_timeout = 3
-read_timeout = 6
-frequency = 6
+connect_timeout = 2
+read_timeout = 3
+frequency = 5
+test_domain = https://www.sogou.com
